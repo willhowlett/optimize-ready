@@ -13,7 +13,7 @@
   'use strict';
 
   var customEventPolyfill = function() {
-    console.log('polyfill');
+
     if ( typeof window.CustomEvent === 'function' ) {return false;}
 
     function CustomEvent ( event, params ) {
@@ -30,10 +30,11 @@
 
   var optimizeReady = function(optimizeID, options) {
 
-    if (typeof optimizeID !== Object) {
+    if (typeof optimizeID !== 'object') {
       throw new Error('First parameter must be an object whose keys are Optimize container IDs');
     }
-    
+    options = typeof options === 'object' ? options : {}
+
     customEventPolyfill();
 
     var
