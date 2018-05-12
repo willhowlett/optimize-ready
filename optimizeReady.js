@@ -34,7 +34,7 @@
    * @param {Object} optimizeID An object whose keys are Optimize container IDs.
    * @param {Object} [options] Optional extra options object.
    * @param {string} [options.dataLayer = 'dataLayer'] The name of property that references the dataLayer object.
-   * @param {number} [options.timeout = 1500] The max time (in milliseconds) the page will be hidden.
+   * @param {number} [options.timeout = 1500] The max time (in milliseconds) the listener will wait.
    */
   var optimizeReady = function(optimizeID, options) {
 

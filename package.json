@@ -17,7 +17,7 @@
     "Listen",
     "Event"
   ],
-  "author": "Will Howlett",
+  "author": "Will Howlett <bigwillchnpm@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/bigwillch/optimize-ready/issues"
