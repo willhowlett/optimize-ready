@@ -24,3 +24,15 @@ window.addEventListener('optimizeReady', function(e) {
   // e.details.timeout returns true if event triggered by timeout
 })
 ```
+
+## Extra options
+
+```javascript
+optimizeReady({
+  'GTM-XXXXXX': true
+}, {
+  timeout: 7000, //The max time (in milliseconds) the listener will wait.
+  dataLayer: 'dataLayer' //The name of property that references the dataLayer object.
+})
+
+```
