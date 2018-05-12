@@ -1,33 +1,41 @@
 (function (root, optimizeReady) {
   if (typeof define === 'function' && define.amd) {
     // AMD
-    define(['jquery'], optimizeReady);
+    define(optimizeReady);
   } else if (typeof exports === 'object') {
     // Node, CommonJS-like
-    module.exports = optimizeReady(require('jquery'));
+    module.exports = optimizeReady();
   } else {
     // Browser globals (root is window)
-    root.returnExports = optimizeReady(root.jQuery);
+    root.returnExports = optimizeReady();
   }
-}(this, function () {
+}(this, function() {
   'use strict';
 
   var customEventPolyfill = function() {
 
-    if ( typeof window.CustomEvent === 'function' ) {return false;}
-
+  if ( typeof window.CustomEvent === 'function' ) {return false;}
     function CustomEvent ( event, params ) {
       params = params || { bubbles: false, cancelable: false, detail: undefined };
       var evt = document.createEvent( 'CustomEvent' );
       evt.initCustomEvent( event, params.bubbles, params.cancelable, params.detail );
       return evt;
-     }
+    }
 
     CustomEvent.prototype = window.Event.prototype;
 
     window.CustomEvent = CustomEvent;
   };
 
+  /**
+   * Adds an 'optimizeReady' event listener that fires once the Optimize
+   * container is loaded and the experiment is ready (or once the defined
+   * timeout has passed).
+   * @param {Object} optimizeID An object whose keys are Optimize container IDs.
+   * @param {Object} [options] Optional extra options object.
+   * @param {string} [options.dataLayer = 'dataLayer'] The name of property that references the dataLayer object.
+   * @param {number} [options.timeout = 1500] The max time (in milliseconds) the page will be hidden.
+   */
   var optimizeReady = function(optimizeID, options) {
 
     if (typeof optimizeID !== 'object') {
@@ -45,7 +53,6 @@
             timeout: false
           }
         });
-
 
     var timer = setTimeout(function() {
       optimizeReady.detail.timeout = true;
