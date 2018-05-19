@@ -31,7 +31,7 @@ window.addEventListener('optimizeReady', function(e) {
 optimizeReady({
   'GTM-XXXXXX': true
 }, {
-  timeout: 7000, //The max time (in milliseconds) the listener will wait.
+  timeout: 7000, //The max time (in milliseconds) the listener will wait before firing anyway. Set to null to only trigger if Optimize fires (only use if sure optimizeReady will fire before Optimize)
   dataLayer: 'dataLayer' //The name of property that references the dataLayer object.
 })
 

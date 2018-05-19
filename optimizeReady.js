@@ -34,7 +34,7 @@
    * @param {Object} optimizeID An object whose keys are Optimize container IDs.
    * @param {Object} [options] Optional extra options object.
    * @param {string} [options.dataLayer = 'dataLayer'] The name of property that references the dataLayer object.
-   * @param {number} [options.timeout = 1500] The max time (in milliseconds) the listener will wait.
+   * @param {number} [options.timeout = 1500] The max time (in milliseconds) the listener will wait before firing anyway. Set to null to only trigger if Optimize fires (only use if sure optimizeReady will fire before Optimize)
    */
   var optimizeReady = function(optimizeID, options) {
 
@@ -46,24 +46,28 @@
     customEventPolyfill();
 
     var
-        dataLayer = options.dataLayer ? options.dataLayer : 'dataLayer',
-        timeOut = options.timeout ? options.timeout : 1500,
+        dataLayer = typeof options.dataLayer === 'string' ? options.dataLayer : 'dataLayer',
+        timeOut = typeof options.timeout === 'number' ? options.timeout : 1500,
         optimizeReady = new CustomEvent('optimizeReady', {
           detail: {
             timeout: false
           }
         });
 
-    var timer = setTimeout(function() {
-      optimizeReady.detail.timeout = true;
-      window.dispatchEvent(optimizeReady);
-      optimizeID.end = null;
-    }, timeOut);
+    if (options.timeout !== null) {
+      var timer = setTimeout(function() {
+        optimizeReady.detail.timeout = true;
+        window.dispatchEvent(optimizeReady);
+        optimizeID.end = null;
+      }, timeOut);
+    }
 
     optimizeID.start = 1*new Date();
 
     optimizeID.end = function() {
-      clearTimeout(timer);
+      if (timer) {
+        clearTimeout(timer);
+      }
       window.dispatchEvent(optimizeReady);
     };
 

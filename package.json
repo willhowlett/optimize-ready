@@ -1,6 +1,6 @@
 {
   "name": "optimize-ready",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Add event listener for when Google Optimize experiment is active",
   "main": "optimizeReady.min.js",
   "scripts": {
